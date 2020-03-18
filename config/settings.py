@@ -36,11 +36,12 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 #다른 사람이 만든 앱
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = ['django_countries',]
 
 PROJECT_APPS = [
+    'core.apps.CoreConfig',
     'users.apps.UsersConfig',
-    'rooms',
+    'rooms.apps.RoomsConfig',
     'lists',
     'reservations',
     'reviews',
