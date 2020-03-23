@@ -42,10 +42,10 @@ PROJECT_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'rooms.apps.RoomsConfig',
-    'lists',
-    'reservations',
-    'reviews',
-    'conversations',
+    'lists.apps.ListsConfig',
+    'reservations.apps.ReservationsConfig',
+    'reviews.apps.ReviewsConfig',
+    'conversations.apps.ConversationsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
