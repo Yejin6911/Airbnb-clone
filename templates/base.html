@@ -5,7 +5,15 @@
     <title>{% block page_title %}{% endblock %}| Nbnb</title>
 </head>
 <body>
-    {% include "partials/header.html" %}
+    <header>
+        {% include "partials/nav.html" %}
+        {% block search-bar%}
+            <form method="get" action="{% url "rooms:search" %}">
+                <input value="" name="city" placeholder="Search by City"/>
+            </form>
+        {% endblock %}
+    </header>
+
     {% block content %}{% endblock %}
     {% include "partials/footer.html" %}
 </body>
