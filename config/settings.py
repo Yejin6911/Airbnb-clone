@@ -35,7 +35,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-#다른 사람이 만든 앱
+# 다른 사람이 만든 앱
 THIRD_PARTY_APPS = ['django_countries', 'django_seed']
 
 PROJECT_APPS = [
@@ -65,7 +65,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,"templates")],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,6 +128,12 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'users.User'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'uploads')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 MEDIA_URL = "/media/"
+
+# Email Configuration
+EMAIL_HOST = "smtp.mailgun.org"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "brad@sandbox1b46c800c5044f81b5daf35606d6892a.mailgun.org "
+EMAIL_HOST_PASSWORD = ""
