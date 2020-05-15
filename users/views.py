@@ -72,9 +72,41 @@ def github_callback(request):
     client_secret = os.environ.get("GH_SECRET")
     code = request.GET.get("code", None)
     if code is not None:
-        request = requests.post(
+        result = requests.post(
             f"https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
             headers={"Accept":"application/json"},
         )
-        print(request.json())
-    return redirect(reverse("core:home"))
+        result_json= result.json()
+        error = result_json.get("error", None)
+        if error is not None:
+            return redirect(reverse("users:login"))
+        else: #이미 해당 소셜로그인으로 로그인가능할 경우
+            access_token = result_json.get("access_token")
+            profile_request = requests.get(
+                "https://api.github.com/user",
+                headers={
+                    "Authorization": f"token {access_token}",
+                    "Accept":"application/json",
+                },
+            )
+            #로그인으로 들어오는 유저 정보 체크
+            profile_json=profile_request.json()
+            username = profile_json.get('login', None)
+            if username is not None:
+                name = profile_json.get('name')
+                email = profile_json.get('email')
+                bio = profile_json.get('bio')
+                #이미 있는 사용자인지 체크
+                user = models.User.objects.get(email=email)
+                if user is not None:
+                    return redirect(reverse("users:login"))
+                else:
+                    user = models.User.objects.create(
+                        username=email, first_name = name, bio=bio, email=email
+                    )
+                    login(request, user)
+                    return redirect(reverse("core:home"))
+            else:
+                return redirect(reverse("users:login"))
+    else:
+        return redirect(reverse("core:home"))
