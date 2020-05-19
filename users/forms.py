@@ -3,8 +3,8 @@ from . import models
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}))
 
     def clean(self):
         email = self.cleaned_data.get("email")
@@ -22,9 +22,13 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ('first_name', 'last_name', 'email')
-
-    password = forms.CharField(widget=forms.PasswordInput)
-    password1 = forms.CharField(widget=forms.PasswordInput, label = "Confirm Password")
+        widgets={
+            'first_name': forms.TextInput(attrs={"placeholder":"First name"}),
+            'last_name': forms.TextInput(attrs={"placeholder": "Last name"}),
+            'email': forms.TextInput(attrs={"placeholder": "Email"})
+        }
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"}))
 
     #비밀번호와 비밀번호 확인 값이 같은지 확인
     def clean_password1(self):

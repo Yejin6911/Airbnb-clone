@@ -9,7 +9,7 @@ class HomeView(ListView):
     """ HomeView Definition  """
 
     model = models.Room
-    paginate_by = 10
+    paginate_by = 12
     paginate_orphans = 5
     page_kwarg = 'page'  # page인자값 이름
     ordering = "created"
@@ -20,7 +20,6 @@ class RoomDetail(DetailView):
     """ RoomDetail Definition  """
 
     model = models.Room
-    pk_url_kwarg = 'potato'
 
 class SearchView(View):
     def get(self, request):
