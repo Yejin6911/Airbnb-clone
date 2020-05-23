@@ -1,7 +1,7 @@
 import os
 import requests
 from django.views import View
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
@@ -195,7 +195,25 @@ class UserProfileView(DetailView):
     context_object_name = "user_obj"
     # 로그인 유저가 아닌 뷰에서 찾았던 유저 객체를 가르키는 방법을 바꿀 수 있또록 해준다.
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["hello"] = "Hello!"
-        return context
+#    def get_context_data(self, **kwargs):
+#        context = super().get_context_data(**kwargs)
+#        context["hello"] = "Hello!"
+#        return context
+
+class UpdateProfileView(UpdateView):
+
+    model = models.User
+    template_name = "users/update-profile.html"
+    fields = (
+        "first_name",
+        "last_name",
+        "avatar",
+        "gender",
+        "bio",
+        "birthdate",
+        "language",
+        "currency",
+    )
+
+    def get_object(self, queryset=None):
+        return self.request.user
