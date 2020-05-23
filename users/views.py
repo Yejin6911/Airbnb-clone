@@ -94,26 +94,31 @@ def github_callback(request):
                 profile_json=profile_request.json()
                 username = profile_json.get('login', None)
                 if username is not None:
-                    name = profile_json.get('name') or ""
-                    email = profile_json.get('email')
-                    bio = profile_json.get('bio') or ""
+                    name = profile_json.get('name')
+                    email = profile_json.get('email', None)
+                    bio = profile_json.get('bio')
+                    if bio is None:
+                        bio = "None"
+                    if email is None:
+                        raise GithubException("Please check your github profile")
                     #이미 있는 사용자인지 체크
-                    try:
-                        user = models.User.objects.get(email=email)
-                        if user.login_method != models.User.LOGIN_GITHUB: #Github 로그인 아닌경우
-                            raise GithubException(f"Please login with: {user.login_method}")
-                    #사용자 없는 경우 -> 새로 생성
-                    except models.User.DoesNotExist:
-                        user = models.User.objects.create(
-                            email=email,
-                            first_name=name,
-                            username=email,
-                            bio=bio,
-                            login_method=models.User.LOGIN_GITHUB,
-                            email_verified=True,
-                        )
-                        user.set_unusable_password()
-                        user.save()
+                    else:
+                        try:
+                            user = models.User.objects.get(email=email)
+                            if user.login_method != models.User.LOGIN_GITHUB: #Github 로그인 아닌경우
+                                raise GithubException(f"Please login with: {user.login_method}")
+                        #사용자 없는 경우 -> 새로 생성
+                        except models.User.DoesNotExist:
+                            user = models.User.objects.create(
+                                email=email,
+                                first_name=name,
+                                username=email,
+                                bio=bio,
+                                login_method=models.User.LOGIN_GITHUB,
+                                email_verified=True,
+                            )
+                            user.set_unusable_password()
+                            user.save()
                         login(request, user)
                         messages.success(request, f"Welcome back {user.first_name}")
                     return redirect(reverse("core:home"))
@@ -138,7 +143,6 @@ class KakaoException(Exception):
 def kakao_callback(request):
     try:
         code = request.GET.get("code")
-        raise KakaoException("Something went wrong")
         client_id = os.environ.get("KAKAO_KEY")
         redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback"
         token_request = requests.get(
@@ -190,3 +194,8 @@ class UserProfileView(DetailView):
     model = models.User
     context_object_name = "user_obj"
     # 로그인 유저가 아닌 뷰에서 찾았던 유저 객체를 가르키는 방법을 바꿀 수 있또록 해준다.
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["hello"] = "Hello!"
+        return context
