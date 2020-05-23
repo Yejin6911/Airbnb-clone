@@ -6,10 +6,11 @@
 }
 
 .nav_link {
-  @apply ml-8 border-b-2 border-white h-full flex items-center;
+  @apply ml-6 border-b-2 border-white h-full flex items-center;
   a {
     @apply py-10 px-5;
   }
+
   &:hover {
     @apply border-gray-600;
   }
@@ -27,7 +28,7 @@ input,
 textarea,
 select {
   @apply rounded-sm py-5 font-light text-lg w-full text-left border border-gray-600 px-5;
-  &:focus{
+  &:focus {
     @apply outline-none border-teal-500;
   }
 }
@@ -40,11 +41,12 @@ textarea {
 select {
   height: 50px;
 }
-form{
+
+form {
   .input {
     @apply mb-3 w-full;
-    &.has_error{
-      input{
+    &.has_error {
+      input {
         @apply bg-red-200 border-gray-600;
         &:focus {
           @apply border-gray-600;
@@ -57,36 +59,40 @@ form{
 @keyframes messageFadeIn {
   0% {
     opacity: 0;
-    transform:translateY(-50px);
+    transform: translateY(-50px);
   }
   5% {
     opacity: 1;
-    transform:translateY(50px);
+    transform: translateY(50px);
   }
   95% {
     opacity: 1;
-    transform:translateY(50px);
+    transform: translateY(50px);
   }
- 100% {
+  100% {
     opacity: 0;
-    transform:translateY(-50px);
+    transform: translateY(-50px);
   }
 }
 
 .message {
-  animation: messageFadeIn 5s ease-in-out forwards; //forwads: 마지막 설정값을 가지고 있게 해줌
+  animation: messageFadeIn 5s ease-in-out forwards;
+
   &.error {
     @apply bg-red-600;
   }
-  &.info{
+
+  &.info {
     @apply bg-blue-500;
   }
-  &.success{
+
+  &.success {
     @apply bg-green-500;
   }
-  &.warning {
-    @apply bg-yellow-500;
-  }
 
+  &.warning {
+    @apply bg-yellow-400;
+  }
 }
+
 @tailwind utilities;
