@@ -7,7 +7,7 @@
     {% endif %}
 
     {% for field in form %}
-        {% include 'mixins/auth/form_input.html' with field=field %}
+        {% include 'mixins/room/room_input.html' %}
     {% endfor %}
 
     <button class="btn bg-red-500 text-white">{{cta}}</button>
