@@ -76,6 +76,7 @@ TEMPLATES = [
             ],
             'libraries': {
                 'sexy_capitals': 'rooms.templatetags.sexy_capitals',
+                'is_booked': 'rooms.templatetags.is_booked'
             }
         },
     },
