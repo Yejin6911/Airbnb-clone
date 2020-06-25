@@ -2,8 +2,8 @@ from django import forms
 from django_countries.fields import CountryField
 from . import models
 
-class SearchForm(forms.Form):
 
+class SearchForm(forms.Form):
     city = forms.CharField(initial="Anywhere")
     country = CountryField(default="KR").formfield()
     room_type = forms.ModelChoiceField(
@@ -16,8 +16,10 @@ class SearchForm(forms.Form):
     baths = forms.IntegerField(required=False)
     instant_book = forms.BooleanField(required=False)
     superhost = forms.BooleanField(required=False)
-    amenities = forms.ModelMultipleChoiceField(required=False, queryset = models.Amenity.objects.all(), widget=forms.CheckboxSelectMultiple)
-    facilities = forms.ModelMultipleChoiceField(required=False, queryset = models.Facility.objects.all(), widget=forms.CheckboxSelectMultiple)
+    amenities = forms.ModelMultipleChoiceField(required=False, queryset=models.Amenity.objects.all(),
+                                               widget=forms.CheckboxSelectMultiple)
+    facilities = forms.ModelMultipleChoiceField(required=False, queryset=models.Facility.objects.all(),
+                                                widget=forms.CheckboxSelectMultiple)
 
 
 class CreatePhotoForm(forms.ModelForm):
@@ -32,4 +34,29 @@ class CreatePhotoForm(forms.ModelForm):
         photo.save()
 
 
+class CreateRoomForm(forms.ModelForm):
+    class Meta:
+        model = models.Room
+        fields = (
+            "name",
+            "description",
+            "country",
+            "city",
+            "price",
+            "address",
+            "guests",
+            "beds",
+            "bedrooms",
+            "baths",
+            "check_in",
+            "check_out",
+            "instant_book",
+            "room_type",
+            "amenities",
+            "facilities",
+            "house_rules",
+        )
 
+    def save(self, *args, **kwargs):
+        room = super().save(commit=False)
+        return room
