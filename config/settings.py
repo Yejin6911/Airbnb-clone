@@ -74,6 +74,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'sexy_capitals': 'rooms.templatetags.sexy_capitals',
+            }
         },
     },
 ]
@@ -141,6 +144,5 @@ EMAIL_HOST_USER = os.environ.get("MAILGUN_USERNAME")
 EMAIL_HOST_PASSWORD = os.environ.get("MAILGUN_PASSWORD")
 EMAIL_FROM = "yejin@sandbox1b46c800c5044f81b5daf35606d6892a.mailgun.org"
 
-
-#Auth
+# Auth
 LOGIN_URL = "/users/login/"
