@@ -5,10 +5,12 @@
 
 {% block content %}
     <div class="-mt-5 container max-w-full h-75vh flex mb-20">
-        <div class="h-full w-1/2 bg-cover bg-cover bg-center" style="background-image:url({{ room.first_photo }})"></div>
+        <div class="h-full w-1/2 bg-cover bg-cover bg-center"
+             style="background-image:url({{ room.first_photo }})"></div>
         <div class="h-full w-1/2 flex flex-wrap">
             {% for photo in room.get_next_four_photos %}
-                <div style="background-image:url({{ photo.file.url }}" class="w-1/2 h-auto bg-cover bg-center border-gray-700 border"></div>
+                <div style="background-image:url({{ photo.file.url }}"
+                     class="w-1/2 h-auto bg-cover bg-center border-gray-700 border"></div>
             {% endfor %}
         </div>
     </div>
@@ -21,7 +23,7 @@
                     <span class="text-gray-700 font-light">{{ room.city }}</span>
                 </div>
                 <a href="{{ room.host.get_absolute_url }}" class="flex flex-col items-center">
-                    {% include "mixins/user_avatar.html" with user=room.host%}
+                    {% include "mixins/user_avatar.html" with user=room.host %}
                     <span class="mt-2 text-gray-500">{{ room.host.first_name }}</span>
                 </a>
             </div>
@@ -71,7 +73,7 @@
                         <div class="border-section">
                             <div class="mb-3 flex">
                                 <div>
-                                    {% include "mixins/user_avatar.html" with user=review.user h_and_w='w-10 h-10' text='text-xl'%}
+                                    {% include "mixins/user_avatar.html" with user=review.user h_and_w='w-10 h-10' text='text-xl' %}
                                 </div>
                                 <div class="flex flex-col ml-5">
                                     <span class="font-medium">{{ review.user.first_name }}</span>
@@ -87,6 +89,17 @@
         <div class="w-1/3">
             {% if room.host == user %}
                 <a href="{% url 'rooms:edit' room.pk %}" class="btn-link block">Edit Room</a>
+            {% else %}
+                {% if not request.session.is_hosting %}
+                    {% for calendar in  room.get_calendars %}
+                     <div>
+                         {{ calendar.get_month }}{{ calendar.year}}
+                         {% for day in calendar.day_names %}
+                             {{ day }}
+                         {% endfor %}
+                     </div>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
     </div>
