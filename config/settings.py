@@ -77,7 +77,8 @@ TEMPLATES = [
             ],
             'libraries': {
                 'sexy_capitals': 'rooms.templatetags.sexy_capitals',
-                'is_booked': 'rooms.templatetags.is_booked'
+                'is_booked': 'rooms.templatetags.is_booked',
+                'on_favs': 'lists.templatetags.on_favs',
             }
         },
     },
